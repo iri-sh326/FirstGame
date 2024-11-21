@@ -10,7 +10,8 @@ namespace FirstGame
         #region Variables
         public static float distanceFromTarget;
         [SerializeField] private float toTarget;    // 거리 숫자 보기
-
+        public RaycastHit hit;
+        public bool currentIsHit = false;
         #endregion
 
         private void Start()
@@ -21,12 +22,16 @@ namespace FirstGame
         // Update is called once per frame
         void Update()
         {
-            RaycastHit hit;
-            if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit))
+            currentIsHit = (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit));
+            if (currentIsHit)
             {
                 distanceFromTarget = hit.distance;
                 toTarget = distanceFromTarget;
             }
+
+            //bool currentIsHitBox = (currentIsHit) ? hit.transform.gameObject.CompareTag("Box") : false;
+
+
         }
 
         // 기즈모 그리기 : 카메라 위치에서 앞 충돌체까지 레이저 쏘는 선 그리기
